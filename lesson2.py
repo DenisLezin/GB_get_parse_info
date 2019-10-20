@@ -8,9 +8,9 @@ suffix = '/afisha/new/city/1/'
 
 headers= {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'}
 
-# parsed = requests.get(main_link+suffix, headers=headers).text
-with open('site_content.txt', 'r', encoding='utf-8') as f:
-    parsed = bs(f.read(), 'lxml')
+parsed = requests.get(main_link+suffix, headers=headers).text
+# with open('site_content.txt', 'r', encoding='utf-8') as f:
+#     parsed = bs(f.read(), 'lxml')
 
 films_block = parsed.find('div', {'class': 'filmsListNew'})
 films_list = films_block.findChildren(recursive=False)
