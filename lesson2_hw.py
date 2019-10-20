@@ -34,3 +34,15 @@ for film in films_list:
     films.append(film_data)
 
 pprint(films)
+
+
+
+
+
+
+
+
+
+
+# with open('site_content.txt', 'w', encoding='utf-8') as f:
+#     f.write(requests.get(main_link+suffix, headers=headers).text)
