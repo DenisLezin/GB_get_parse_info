@@ -3,6 +3,7 @@ import re
 import requests
 from pprint import pprint
 import time
+from random import randint
 
 def get_salary_hh(vacancy_salary):
     vacancy_salary = vacancy_salary.getText().replace('\xa0', '')
@@ -66,7 +67,7 @@ for i in range(number_of_pages):
         break
     else:
         suffix = suffix[suffix.find('?'):]
-    time.sleep(1)
+    time.sleep(randint(1, 3))
 
 
 pprint(result)
