@@ -6,24 +6,24 @@ import time
 from random import randint
 
 
+def get_salary_hh(vacancy_salary):
+    vacancy_salary = vacancy_salary.getText().replace('\xa0', '')
+    currency = re.search(r' \D+', vacancy_salary).group(0).replace('.', '').strip()
+    if 'от' in vacancy_salary:
+        vacancy_salary_min = re.findall(r'\d+', vacancy_salary)[0]
+        vacancy_salary_max = None
+    elif 'до' in vacancy_salary:
+        vacancy_salary_min = None
+        vacancy_salary_max = re.findall(r'\d+', vacancy_salary)[0]
+    else:
+        vacancy_salary_min = re.findall(r'\d+', vacancy_salary)[0]
+        vacancy_salary_max = re.findall(r'\d+', vacancy_salary)[1]
+    return [float(vacancy_salary_min) if vacancy_salary_min else None,
+            float(vacancy_salary_max) if vacancy_salary_max else None,
+            currency]
+
 def get_vacancies_hh(vacancy, number_of_pages, test=True):
     # Parse HH
-
-    def get_salary_hh(vacancy_salary):
-        vacancy_salary = vacancy_salary.getText().replace('\xa0', '')
-        currency = re.search(r' \D+', vacancy_salary).group(0).replace('.', '').strip()
-        if 'от' in vacancy_salary:
-            vacancy_salary_min = re.findall(r'\d+', vacancy_salary)[0]
-            vacancy_salary_max = None
-        elif 'до' in vacancy_salary:
-            vacancy_salary_min = None
-            vacancy_salary_max = re.findall(r'\d+', vacancy_salary)[0]
-        else:
-            vacancy_salary_min = re.findall(r'\d+', vacancy_salary)[0]
-            vacancy_salary_max = re.findall(r'\d+', vacancy_salary)[1]
-        return [float(vacancy_salary_min) if vacancy_salary_min else None,
-                float(vacancy_salary_max) if vacancy_salary_max else None,
-                currency]
 
     main_link = 'https://hh.ru/search/vacancy'
 
@@ -50,7 +50,7 @@ def get_vacancies_hh(vacancy, number_of_pages, test=True):
             vacancy_name = vac.find('a').getText()
             vacancy_city = re.search(r'^[\w-]+', vac.find('span', {'class': 'vacancy-serp-item__meta-info'}).getText()).group(0)
             vacancy_link = vac.find('a')['href']
-            vacancy_salary = vac.find('div', {'class': 'vacancy-serp-item__salary'})
+            vacancy_salary = vac.find('div', {'class': 'vacancy-serp-item__compensation'})
             if not vacancy_salary:
                 vacancy_salary = [None, None, None]
             else:
@@ -74,12 +74,12 @@ def get_vacancies_hh(vacancy, number_of_pages, test=True):
     return result
 
 
-vacancy = 'Python junior'
-number_of_pages = 2
-res = get_vacancies_hh(vacancy, number_of_pages, 0)
-
-pprint(res)
-print(len(res))
+# vacancy = 'Python junior'
+# number_of_pages = 2
+# res = get_vacancies_hh(vacancy, number_of_pages)
+#
+# pprint(res)
+# print(len(res))
 
 
 # for i in result:
