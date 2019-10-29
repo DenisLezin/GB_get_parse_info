@@ -36,6 +36,3 @@ def get_mail_ru_news():
 
 pprint(get_mail_ru_news())
 
-
-# ml_root.xpath("//div[@class='news-item o-media news-item_media news-item_main']/a/@href")
-# '//span[@class = "note__text breadcrumbs__tdateext js-ago"]/@datetime'
