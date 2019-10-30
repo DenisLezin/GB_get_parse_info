@@ -33,10 +33,12 @@ def get_vacancies(vacancy, number_of_pages, main_link, headers, test=True):
             vacancy_data = {}
 
             vacancy_name = eval(request_params['name'])
-            vacancy_city = eval(request_params['city'])
+
             vacancy_link = eval(request_params['link'])
             vacancy_salary = eval(request_params['salary'])
             vacancy_salary = get_salary(vacancy_salary)
+            # print(vacancy_link)
+            vacancy_city = eval(request_params['city'])
 
             vacancy_data['vacancy'] = vacancy_name
             vacancy_data['city'] = vacancy_city
@@ -101,7 +103,8 @@ def get_params(main_link):
                                "vacancy_list": "vacancy_block.find_all('div', {'class': "
                                                "'_3zucV _2GPIV f-test-vacancy-item i6-sc _3VcZr'})",
                                "name": "vac.find('div', {'class': '_3mfro CuJz5 PlM3e _2JVkc _3LJqf'}).getText()",
-                               "city": "re.search(r'• [\w-]+,?', vac.find('div', {'class': '_2XXYS _2cxK3'})."
+                               "city": "re.search(r'• [\w-]+,?', vac.find('span', "
+                                       "{'class': '_3mfro f-test-text-company-item-location _9fXTd _2JVkc _3e53o'})."
                                        "getText()).group(0)[2:].replace(',', '')",
                                "link": "main_link + vac.find('a')['href']",
                                "salary": "vac.find('span', {'class': "
