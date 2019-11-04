@@ -10,5 +10,12 @@ import scrapy
 
 class GetvacanciesItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    _id = scrapy.Field()
+    request = scrapy.Field()
+    vacancy = scrapy.Field()
+    location = scrapy.Field()
+    salary_min = scrapy.Field()
+    salary_max = scrapy.Field()
+    salary_currency = scrapy.Field()
+    link = scrapy.Field()
     pass

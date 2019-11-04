@@ -6,7 +6,7 @@ client = MongoClient('localhost', 27017)
 db = client['vacanies']
 hh = db.hh
 
-vacancy = 'Python junior'
+vacancy = 'data scientist'
 number_of_pages = 5
 min_salary = 60000
 
@@ -15,9 +15,12 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
                          ' Chrome/77.0.3865.120 Safari/537.36'}
 
 def fill_db(vacancy, number_of_pages, main_link, headers, test=True):
-    hh.delete_many({})
     for link in main_link:
-        hh.insert_many(get_vacancies(vacancy, number_of_pages, link, headers, test))
+        for item in get_vacancies(vacancy, number_of_pages, link, headers, test):
+            hh.update_one(
+                {"link": "item['link']"},
+                {"$set": item},
+                upsert=True)
 
 def get_vacancies_min_salary(salary):
     return hh.find({'salary_min':  {'$gte': salary}})
