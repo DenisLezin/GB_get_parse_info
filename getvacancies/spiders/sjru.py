@@ -20,7 +20,6 @@ class SjruSpider(scrapy.Spider):
 
 
     def vacancy_parse(self, response):
-        pass
         request = vacancy_name
         vacancy = ' '.join(response.css('div.undefined h1 ::text').extract())
         location = ' '.join(response.css('div.undefined span._6-z9f ::text').extract())
