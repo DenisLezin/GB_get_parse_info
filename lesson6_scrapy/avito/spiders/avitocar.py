@@ -10,11 +10,14 @@ class AvitocarSpider(scrapy.Spider):
     allowed_domains = ['avito.ru']
     start_urls = ['https://www.avito.ru/rossiya/avtomobili']
 
+
     def parse(self, response: HtmlResponse):
         n = 1
-        while n <= 2:
+        while True:
             next_page = response.css('a.js-pagination-next::attr(href)').extract_first()
             n += 1
+            if n == 3:
+                break
             yield response.follow(next_page, callback=self.parse)
 
 
