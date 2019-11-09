@@ -7,6 +7,8 @@
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
 from pymongo import MongoClient
+from lesson6_scrapy.avito.settings import IMAGES_STORE
+import os
 
 class AvitoPipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
@@ -19,13 +21,14 @@ class AvitoPipeline(ImagesPipeline):
 
     def item_completed(self, results, item, info):
         if results:
-            item['photos'] = [itm[1] for itm in results if itm[0]]
+            item['photos'] = [os.path.join(IMAGES_STORE,
+                              itm[1]["path"].split("/")[0], itm[1]["path"].split("/")[1]) for itm in results if itm[0]]
         return item
 
 class DatabasePipeline(object):
     def __init__(self):
         client=MongoClient('127.0.0.1', 27017)
-        self.mongo_base = client.avito_flats
+        self.mongo_base = client.avito_parse
 
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
