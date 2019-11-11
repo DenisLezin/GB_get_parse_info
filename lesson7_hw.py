@@ -11,7 +11,7 @@ driver.get('https://mail.ru/')
 assert 'Mail.ru' in driver.title
 
 elem = driver.find_element_by_id('mailbox:login')
-elem.send_keys('santar2000')
+elem.send_keys('*****')
 elem.send_keys(Keys.RETURN)
 
 try:
@@ -19,7 +19,7 @@ try:
     elem = WebDriverWait(driver, 10).until(
         ec.visibility_of_element_located((By.ID, 'mailbox:password'))
     )
-    elem.send_keys('wtazkowtazko')
+    elem.send_keys('*****')
     elem.send_keys(Keys.RETURN)
 except Exception as e:
     print(e)
